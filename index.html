@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newtonite - Visual Reasoning Assessment | SDE Assignment</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fa-solid fa-brain logo-icon"></i>
+          <span>Newtonite SDE</span>
+        </div>
+        <span class="badge">SDE Assignment</span>
+      </div>
+      
+      <div class="stats-summary">
+        <div class="stat-box">
+          <span class="stat-val" id="stats-progress">0%</span>
+          <span class="stat-lbl">Progress</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="stats-score">0/0</span>
+          <span class="stat-lbl">Correct</span>
+        </div>
+      </div>
+      
+      <div class="quiz-controls-sidebar">
+        <div class="control-group">
+          <label class="toggle-switch">
+            <input type="checkbox" id="mode-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <span class="control-label">Practice Mode <i class="fa-solid fa-circle-info" title="Practice mode gives instant feedback. Exam mode shows results at the end."></i></span>
+        </div>
+      </div>
+
+      <div class="navigation-grid-container">
+        <h3>Questions Grid</h3>
+        <div class="questions-grid" id="questions-grid">
+          <!-- Question buttons will be generated here -->
+        </div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <button id="reset-quiz-btn" class="btn btn-secondary btn-block">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Reset Progress
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h1>Visual Reasoning Assessment Platform</h1>
+          <p class="subtitle">Newtonite Assignment for SDE &bull; 55 Comprehensive Visual Reasoning Questions</p>
+        </div>
+        <div class="navbar-right">
+          <div class="timer-display">
+            <i class="fa-regular fa-clock"></i>
+            <span id="timer">00:00:00</span>
+          </div>
+          <button id="theme-toggle" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Workspace -->
+      <div class="workspace-grid">
+        <!-- Question Panel -->
+        <section class="question-panel card">
+          <div class="panel-header">
+            <div class="question-badge">Question <span id="current-q-num">1</span> of 55</div>
+            <div class="header-actions">
+              <button id="flag-btn" class="flag-btn" title="Flag this question for review">
+                <i class="fa-regular fa-flag"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+          </div>
+
+          <!-- Question Content -->
+          <div class="question-content">
+            <p class="question-text" id="question-text">
+              Loading question...
+            </p>
+            
+            <!-- Question Visual Part -->
+            <div class="question-visual" id="question-visual">
+              <!-- Main Question Image will go here -->
+            </div>
+
+            <!-- Options Part -->
+            <div class="options-container" id="options-container">
+              <!-- Options (text cards or visual cards) will go here -->
+            </div>
+          </div>
+
+          <!-- Question Footer / Actions -->
+          <div class="panel-footer">
+            <button id="prev-btn" class="btn btn-secondary">
+              <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            
+            <div class="feedback-indicator" id="feedback-indicator">
+              <!-- Text like "Correct!" or "Incorrect!" -->
+            </div>
+            
+            <button id="next-btn" class="btn btn-primary">
+              Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- Sidebar Info Panel (Explanation / Help) -->
+        <section class="info-panel card">
+          <div class="info-panel-header">
+            <h2><i class="fa-solid fa-circle-question"></i> Guide & Key</h2>
+          </div>
+          
+          <div class="info-panel-body" id="info-panel-body">
+            <!-- Explanation or hints will go here -->
+            <div class="empty-state">
+              <div class="empty-icon"><i class="fa-solid fa-bolt"></i></div>
+              <h3>Practice Mode Active</h3>
+              <p>Select an option to receive instant verification. In Exam mode, click the answers and view your final analytics card at the end.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Congratulations Modal -->
+  <div class="modal-overlay" id="quiz-complete-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <i class="fa-solid fa-trophy trophy-icon"></i>
+        <h2>Quiz Completed!</h2>
+      </div>
+      <div class="modal-body">
+        <p>Congratulations! You have completed the Newtonite Visual Reasoning assessment.</p>
+        <div class="modal-stats">
+          <div class="modal-stat">
+            <span class="val" id="modal-score">0/55</span>
+            <span class="lbl">Correct Score</span>
+          </div>
+          <div class="modal-stat">
+            <span class="val" id="modal-accuracy">0%</span>
+            <span class="lbl">Accuracy</span>
+          </div>
+          <div class="modal-stat">
+            <span class="val" id="modal-time">00:00</span>
+            <span class="lbl">Total Time</span>
+          </div>
+        </div>
+        <div class="modal-chart-box">
+          <div class="chart-progress-ring">
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="progress-ring__circle-bg" stroke="#1f2937" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+              <circle class="progress-ring__circle" id="modal-progress-circle" stroke="var(--primary-color)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+            </svg>
+            <div class="progress-ring-text" id="modal-percentage">0%</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-close-btn" class="btn btn-primary btn-block">Review Answers</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link the quiz data and Javascript app -->
+  <script src="quiz_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
